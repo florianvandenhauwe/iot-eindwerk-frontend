@@ -15,6 +15,22 @@ const firestorage = {
     return firebase.firestore().collection(path)
       .onSnapshot(callback);
   },
+  getDocument({path}) {
+    const query = firebase.firestore().doc(path).get();
+    return query;
+  },
+  updateDoc({ path, items }) {
+    firebase.firestore().doc(path).update(items);
+  },
+  addDoc({ path, items }) {
+    firebase.firestore().collection(path).add(items);
+  },
+  setDoc({ path, items }) {
+    firebase.firestore().doc(path).set(items);
+  },
+  deleteDoc({ path }) {
+    firebase.firestore().doc(path).delete();
+  },
 }
 
 export default firestorage;

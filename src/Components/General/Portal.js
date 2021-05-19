@@ -1,10 +1,6 @@
 import App from '../App';
 import Div from '../Design/Div';
 
-const clearPortal = () => {
-    App.portal.innerHTML = null;
-}
-
 const Portal = () => {
     const bg = Div({classList: ['portal__overlay', 'clearPortal']});
     const p = Div({classList: ['portal__inner']});

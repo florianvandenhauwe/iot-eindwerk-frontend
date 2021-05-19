@@ -1,44 +1,44 @@
-import Elements from '../../lib/ElementFunctions';
 import firestorage from '../../lib/Firestore';
+import SoundData from '../../lib/SoundData';
+import { handleTextAdd } from '../../lib/SoundEffects';
 import Button from '../Design/Button';
 import Div from '../Design/Div';
 import Form from '../Design/forms/Form';
 import Input from '../Design/forms/Input';
 import Label from '../Design/forms/Label';
-import Select from '../Design/forms/Select';
 import Title from '../Design/Title';
+import renderEffectForm from './EffectForms';
 
-const handleClick = () => {
-    console.log('clicked');
+const handleClick = (e) => {
+    e.preventDefault();
+    SoundData.sendToFireStore();
 }
 
 const SoundForm = () => {
-    const d = Div({classList: ['soundform']});
-    const f = Form();
+    const d = Div({classList: ['soundForm']});
+    const f = Form({classList: ['form']});
     
     d.appendChild(Title({textContent: 'New Sound'}));
     
     //Sound text
-    const dText = Div({classList: ['form--text']});
+    const dText = Div({classList: ['form--select']});
+    dText.appendChild(Title({textContent: 'Text', size: 2}));
     dText.appendChild(Label({textContent: 'Enter text', htmlFor: 'text'}));
-    dText.appendChild(Input({placeholder: 'Text here', name: 'text'}));
+    const textInput = dText.appendChild(Input({placeholder: 'Text here', name: 'text', id: 'text', value: SoundData.text, classList: ['fill-h']}));
     f.appendChild(dText);
-    
+    textInput.oninput = () => {
+        handleTextAdd(textInput.value);
+    }
+
     //Settings
-    firestorage.getCollection({path: 'effecten'}).then((data) => {
-        data.forEach((doc) => {
-            const fSelect = Div({classList: ['form--select']});
-            fSelect.appendChild(Title({textContent: Elements.toUpper(doc.id), size: 2}));
-            for (const [key, value] of Object.entries(doc.data())) {
-                fSelect.appendChild(Label({textContent: Elements.toUpper(key), htmlFor: key}));
-                fSelect.appendChild(Input({value}))
-            }
-            f.appendChild(fSelect);
+    SoundData.effects.forEach((effect) => {
+        firestorage.getDocument({path: `effecten/${effect}`}).then((doc) => {
+            f.appendChild(renderEffectForm(doc));
         })
     })
 
     //submit button
-    const b = Button({textContent: 'Add', onClick: handleClick, style: 'primary abs-down-center' })
+    const b = Button({textContent: 'Add', onClick: handleClick, classList: ['clearPortal', 'full'], type: 'submit' })
     f.appendChild(b);
 
     d.appendChild(f);    

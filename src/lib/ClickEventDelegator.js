@@ -4,6 +4,7 @@
 
 import App from '../Components/App';
 import Elements from './ElementFunctions';
+import SoundData from './SoundData';
 
 class ClickEventDelegator {
   constructor() {
@@ -32,7 +33,10 @@ const initEventDelegator = () => {
   // clear portal
   eventDelegator.addCallbackFor(
     '.clearPortal',
-    () => Elements.clearContainer(App.portal),
+    () => {
+      Elements.clearContainer(App.portal);
+      SoundData.clearData();
+    },
   );
 };
 
