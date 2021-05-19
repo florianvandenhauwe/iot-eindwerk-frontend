@@ -18,8 +18,8 @@ class SoundData {
             //overwrite delay object with correct vars
             const { decay_one, decay_two, delay_one, delay_two, gain_in, gain_out, parallel } = this.data.delay;
             this.data.delay = {
-                decays: `list((${decay_one},${decay_two}))`,
-                delays: `list((${delay_one},${delay_two}))`,
+                decays: `list((${decay_one || 0},${decay_two || 0}))`,
+                delays: `list((${delay_one || 0},${delay_two || 0}))`,
                 gain_in: gain_in || defaultData.delay.gain_in,
                 gain_out: gain_out || defaultData.delay.gain_out,
                 parallel: parallel || defaultData.delay.parallel,
