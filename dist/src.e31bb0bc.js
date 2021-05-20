@@ -30284,6 +30284,10 @@ require("firebase/firestore");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -30322,11 +30326,27 @@ var firestorage = {
     return _app.default.firestore().collection(path).onSnapshot(callback);
   },
   getDocument: function getDocument(_ref3) {
-    var path = _ref3.path;
+    return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var path, query;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              path = _ref3.path;
+              _context.next = 3;
+              return _app.default.firestore().doc(path).get();
 
-    var query = _app.default.firestore().doc(path).get();
+            case 3:
+              query = _context.sent;
+              return _context.abrupt("return", query);
 
-    return query;
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   updateDoc: function updateDoc(_ref4) {
     var path = _ref4.path,
@@ -30489,6 +30509,7 @@ var SoundData = /*#__PURE__*/function () {
     this.text = '';
     this.effects = [];
     this.data = {};
+    this.lang = 'en';
   }
 
   _createClass(SoundData, [{
@@ -30511,8 +30532,8 @@ var SoundData = /*#__PURE__*/function () {
             gain_out = _this$data$delay.gain_out,
             parallel = _this$data$delay.parallel;
         this.data.delay = {
-          decays: "list((".concat(decay_one, ",").concat(decay_two, "))"),
-          delays: "list((".concat(delay_one, ",").concat(delay_two, "))"),
+          decays: "list((".concat(decay_one || 0, ",").concat(decay_two || 0, "))"),
+          delays: "list((".concat(delay_one || 0, ",").concat(delay_two || 0, "))"),
           gain_in: gain_in || _defaultData.default.delay.gain_in,
           gain_out: gain_out || _defaultData.default.delay.gain_out,
           parallel: parallel || _defaultData.default.delay.parallel
@@ -30531,7 +30552,7 @@ var SoundData = /*#__PURE__*/function () {
       var objectToSend = {
         effects: _objectSpread({}, this.data),
         settings: {
-          lang: 'en'
+          lang: this.lang
         },
         text: this.text
       };
@@ -30921,6 +30942,59 @@ var Label = function Label(_ref) {
 
 var _default = Label;
 exports.default = _default;
+},{}],"Components/Design/forms/Select.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var Options = function Options(_ref) {
+  var value = _ref.value,
+      innerText = _ref.innerText;
+  var o = document.createElement('option');
+  o.value = value;
+  o.innerText = innerText;
+  return o;
+};
+
+var Select = function Select(_ref2) {
+  var _ref2$name = _ref2.name,
+      name = _ref2$name === void 0 ? '' : _ref2$name,
+      _ref2$options = _ref2.options,
+      options = _ref2$options === void 0 ? {} : _ref2$options;
+  var s = document.createElement('select');
+  s.name = name;
+
+  for (var _i = 0, _Object$entries = Object.entries(options); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        key = _Object$entries$_i[0],
+        value = _Object$entries$_i[1];
+
+    s.appendChild(Options({
+      value: value,
+      innerText: key
+    }));
+  }
+
+  return s;
+};
+
+var _default = Select;
+exports.default = _default;
 },{}],"Components/Functional/NewSound.js":[function(require,module,exports) {
 "use strict";
 
@@ -30928,6 +31002,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _Firestore = _interopRequireDefault(require("../../lib/Firestore"));
+
+var _SoundData = _interopRequireDefault(require("../../lib/SoundData"));
 
 var _SoundEffects = require("../../lib/SoundEffects");
 
@@ -30939,64 +31017,106 @@ var _Input = _interopRequireDefault(require("../Design/forms/Input"));
 
 var _Label = _interopRequireDefault(require("../Design/forms/Label"));
 
+var _Select = _interopRequireDefault(require("../Design/forms/Select"));
+
 var _Title = _interopRequireDefault(require("../Design/Title"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NewSound = function NewSound() {
-  var f = (0, _Div.default)({
-    classList: ['soundForm', 'flex']
-  }); //Sound text
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-  var dText = (0, _Div.default)({
-    classList: ['form--text']
-  });
-  dText.appendChild((0, _Title.default)({
-    textContent: 'Text',
-    size: 2
-  }));
-  dText.appendChild((0, _Label.default)({
-    textContent: 'Enter text',
-    htmlFor: 'text'
-  }));
-  var textInput = dText.appendChild((0, _Input.default)({
-    placeholder: 'Text here',
-    name: 'text',
-    id: 'text',
-    classList: ['fill-h']
-  }));
-  f.appendChild(dText);
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-  textInput.oninput = function () {
-    (0, _SoundEffects.handleTextAdd)(textInput.value);
+var NewSound = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var f, dText, textInput, languages, select;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            f = (0, _Div.default)({
+              classList: ['soundForm', 'flex']
+            }); //Sound text
+
+            dText = (0, _Div.default)({
+              classList: ['form--text']
+            });
+            dText.appendChild((0, _Title.default)({
+              textContent: 'Text',
+              size: 2
+            }));
+            dText.appendChild((0, _Label.default)({
+              textContent: 'Enter text',
+              htmlFor: 'text'
+            }));
+            textInput = dText.appendChild((0, _Input.default)({
+              placeholder: 'Text here',
+              name: 'text',
+              id: 'text',
+              classList: ['fill-h']
+            }));
+            f.appendChild(dText);
+
+            textInput.oninput = function () {
+              (0, _SoundEffects.handleTextAdd)(textInput.value);
+            }; //Sound effects
+
+
+            _SoundEffects.soundEffects.forEach(function (effect) {
+              var div = (0, _Div.default)({
+                classList: ['form--select', 'flex']
+              });
+              var checkbox = div.appendChild((0, _Checkbox.default)({
+                value: effect,
+                name: effect,
+                id: effect,
+                checked: (0, _SoundEffects.checkEffect)(effect)
+              }));
+              checkbox.addEventListener('click', function () {
+                (0, _SoundEffects.handleToggle)(effect);
+              });
+              div.appendChild((0, _Label.default)({
+                textContent: effect,
+                htmlFor: effect
+              }));
+              f.appendChild(div);
+            }); //sound language
+
+
+            _context.next = 10;
+            return _Firestore.default.getDocument({
+              path: 'effecten/language'
+            });
+
+          case 10:
+            languages = _context.sent;
+            select = f.appendChild((0, _Select.default)({
+              name: 'Language',
+              options: languages.data().lang
+            }));
+
+            select.oninput = function () {
+              _SoundData.default.lang = select.value;
+            };
+
+            return _context.abrupt("return", f);
+
+          case 14:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  return function NewSound() {
+    return _ref.apply(this, arguments);
   };
-
-  _SoundEffects.soundEffects.forEach(function (effect) {
-    var div = (0, _Div.default)({
-      classList: ['form--select', 'flex']
-    });
-    var checkbox = div.appendChild((0, _Checkbox.default)({
-      value: effect,
-      name: effect,
-      id: effect,
-      checked: (0, _SoundEffects.checkEffect)(effect)
-    }));
-    checkbox.addEventListener('click', function () {
-      (0, _SoundEffects.handleToggle)(effect);
-    });
-    div.appendChild((0, _Label.default)({
-      textContent: effect,
-      htmlFor: effect
-    }));
-    f.appendChild(div);
-  });
-
-  return f;
-};
+}();
 
 var _default = NewSound;
 exports.default = _default;
-},{"../../lib/SoundEffects":"lib/SoundEffects.js","../Design/Div":"Components/Design/Div.js","../Design/forms/Checkbox":"Components/Design/forms/Checkbox.js","../Design/forms/Input":"Components/Design/forms/Input.js","../Design/forms/Label":"Components/Design/forms/Label.js","../Design/Title":"Components/Design/Title.js"}],"Components/Design/forms/Form.js":[function(require,module,exports) {
+},{"../../lib/Firestore":"lib/Firestore.js","../../lib/SoundData":"lib/SoundData.js","../../lib/SoundEffects":"lib/SoundEffects.js","../Design/Div":"Components/Design/Div.js","../Design/forms/Checkbox":"Components/Design/forms/Checkbox.js","../Design/forms/Input":"Components/Design/forms/Input.js","../Design/forms/Label":"Components/Design/forms/Label.js","../Design/forms/Select":"Components/Design/forms/Select.js","../Design/Title":"Components/Design/Title.js"}],"Components/Design/forms/Form.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31583,29 +31703,59 @@ var _Portal = _interopRequireDefault(require("../General/Portal"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 var openPortal = function openPortal() {
   var portal = (0, _Portal.default)();
   portal.appendChild((0, _SoundForm.default)());
 };
 
-var RenderDashboard = function RenderDashboard() {
-  _App.default.resetBody();
+var RenderDashboard = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+    var main;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _App.default.resetBody();
 
-  _App.default.addComponent((0, _Header.default)({
-    textContent: 'IOTalks'
+            _App.default.addComponent((0, _Header.default)({
+              textContent: 'IOTalks'
+            }));
+
+            main = (0, _Main.default)();
+            _context.t0 = main;
+            _context.next = 6;
+            return (0, _NewSound.default)();
+
+          case 6:
+            _context.t1 = _context.sent;
+
+            _context.t0.appendChild.call(_context.t0, _context.t1);
+
+            main.appendChild((0, _Button.default)({
+              textContent: 'Add Sound',
+              onClick: openPortal,
+              classList: ['center-h']
+            }));
+            main.appendChild((0, _SoundList.default)());
+
+            _App.default.addComponent(main);
+
+          case 11:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
   }));
 
-  var main = (0, _Main.default)();
-  main.appendChild((0, _NewSound.default)());
-  main.appendChild((0, _Button.default)({
-    textContent: 'Add Sound',
-    onClick: openPortal,
-    classList: ['center-h']
-  }));
-  main.appendChild((0, _SoundList.default)());
-
-  _App.default.addComponent(main);
-};
+  return function RenderDashboard() {
+    return _ref.apply(this, arguments);
+  };
+}();
 
 var _default = RenderDashboard;
 exports.default = _default;
@@ -31726,7 +31876,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64915" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53597" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

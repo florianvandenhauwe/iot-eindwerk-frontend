@@ -15,8 +15,8 @@ const firestorage = {
     return firebase.firestore().collection(path)
       .onSnapshot(callback);
   },
-  getDocument({path}) {
-    const query = firebase.firestore().doc(path).get();
+  async getDocument({path}) {
+    const query = await firebase.firestore().doc(path).get();
     return query;
   },
   updateDoc({ path, items }) {

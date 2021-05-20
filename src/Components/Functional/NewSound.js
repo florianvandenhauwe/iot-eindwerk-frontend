@@ -1,3 +1,5 @@
+import firestorage from '../../lib/Firestore';
+import SoundData from '../../lib/SoundData';
 import {
     checkEffect,
     handleTextAdd,
@@ -8,10 +10,11 @@ import Div from '../Design/Div';
 import Checkbox from '../Design/forms/Checkbox';
 import Input from '../Design/forms/Input';
 import Label from '../Design/forms/Label';
+import Select from '../Design/forms/Select';
 import Title from '../Design/Title';
 
 
-const NewSound = () => {
+const NewSound = async () => {
     const f = Div({
         classList: ['soundForm', 'flex']
     })
@@ -39,6 +42,7 @@ const NewSound = () => {
         handleTextAdd(textInput.value);
     }
 
+    //Sound effects
     soundEffects.forEach(effect => {
         const div = Div({
             classList: ['form--select', 'flex']
@@ -58,6 +62,14 @@ const NewSound = () => {
         }));
         f.appendChild(div);
     });
+
+    //sound language
+    const languages = await firestorage.getDocument({path: 'effecten/language'});
+    const select = f.appendChild(Select({name: 'Language', options: languages.data().lang}));
+    select.oninput = () => {
+        SoundData.lang = select.value;
+    }
+
     return f;
 }
 

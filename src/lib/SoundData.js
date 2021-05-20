@@ -6,6 +6,7 @@ class SoundData {
         this.text = '';
         this.effects = [];
         this.data = {};
+        this.lang = 'en';
     }
 
     clearData() {
@@ -38,7 +39,7 @@ class SoundData {
                 ...this.data,
             },
             settings: {
-                lang: 'en',
+                lang: this.lang,
             },
             text: this.text,
         }

@@ -12,12 +12,12 @@ const openPortal = () => {
     portal.appendChild(SoundForm());
 }
 
-const RenderDashboard = () => {
+const RenderDashboard = async () => {
     App.resetBody();
     App.addComponent(Header({textContent: 'IOTalks'}));
     const main = Main();
 
-    main.appendChild(NewSound());
+    main.appendChild(await NewSound());
 
     main.appendChild(Button({textContent: 'Add Sound', onClick: openPortal, classList: ['center-h']}));
 
