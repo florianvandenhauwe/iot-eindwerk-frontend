@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+:root {
+    --main-color: #364A5C;
+    --secondary-color: #E5E1DA;
+    --tertiary-color: #5B6673;
+    --danger-color: #EE5555;
+    --positive-color: #55CC55;
+    --light-color: #FFFFFF;
+    --dark-transparent: rgba(0, 0, 0, 0.3);
+
+    --font-large: 3rem;
+    --font-medium: 1.5rem;
+    --font-small: 1rem;
+}
+
+
+body {
+    background-color: var(--secondary-color);
+}
+
+h1 {
+    text-align: center;
+}
+
+header {
+    height: 10vw;
+    min-height: var(--font-large);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 10vw;
+    font-size: 2rem;
+    background-color: var(--main-color);
+    color: var(--light-color);
+}
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.fill-h {
+    width: 100%;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.center-h {
+    display: block;
+    margin: 0 auto;
+}
+
+.soundForm {
+    padding: 1rem;
+}
+
+form {
+    padding-bottom: 5rem;
+}
+
+label {
+    font-size: var(--font-small);
+}
+
+input {
+    font-size: var(--font-small);
+}
+
+select {
+    margin: 0 .25rem;
+}
+
+.form--text,
+.form--select {
+    margin: .5rem auto .5rem 0;
+    font-size: var(--font-small);
+}
+
+.form--select h2 {
+    border-bottom: 1px solid var(--main-color);
+    margin: .5rem 0;
+    text-align: center;
+}
+
+.form--text {
+    width: 100%;
+}
+
+button.primary {
+    border: none;
+    border-radius: .5rem;
+    color: var(--light-color);
+    min-width: 5rem;
+    font-size: var(--font-small);
+    padding: .5rem;
+    cursor: pointer;
+}
+
+#portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.portal__overlay {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--dark-transparent);
+    justify-content: center;
+    align-items: center;
+}
+
+.portal__inner {
+    display: flex;
+    justify-content: center;
+    width: 90vw;
+    max-width: 35rem;
+    max-height: 90vh;
+    overflow-y: scroll;
+    padding: 1rem;
+    background-color: var(--light-color);
+    color: var(--main-color);
+    border-radius: 2vw;
+}
+
+.abs-down-center {
+    position: absolute;
+    top: 90%;
+    left: 30%;
+}
+
+.filler-5 {
+    height: 5rem;
+    width: 100%;
+}
+
+.card {
+    border: 1px solid var(--main-color);
+}
+
+.rounded {
+    border-radius: 1rem;
+}
+
+.soundList {
+    width: 95%;
+    margin: 2rem auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.soundCard {
+    width: 40%;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.wide {
+    width: 80%;
+    margin: 1vw auto;
+}
+.full {
+    width: 100%;
+    margin: 1vw auto;
+}
+
+.danger {
+    background-color: var(--danger-color);
+}
+
+.positive {
+    background-color: var(--positive-color);
+}
+
+/*# sourceMappingURL=/app.ae05fb60.css.map */
