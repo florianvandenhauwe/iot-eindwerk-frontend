@@ -1,11 +1,6 @@
 import firestorage from '../../lib/Firestore';
 import SoundData from '../../lib/SoundData';
-import {
-    checkEffect,
-    handleTextAdd,
-    handleToggle,
-    soundEffects
-} from '../../lib/SoundEffects';
+import { soundEffects } from '../../lib/SoundEffects';
 import Div from '../Design/Div';
 import Checkbox from '../Design/forms/Checkbox';
 import Input from '../Design/forms/Input';
@@ -39,7 +34,7 @@ const NewSound = async () => {
     }));
     f.appendChild(dText);
     textInput.oninput = () => {
-        handleTextAdd(textInput.value);
+        SoundData.handleTextAdd(textInput.value);
     }
 
     //Sound effects
@@ -51,10 +46,10 @@ const NewSound = async () => {
             value: effect,
             name: effect,
             id: effect,
-            checked: checkEffect(effect)
+            checked: SoundData.checkEffect(effect)
         }));
         checkbox.addEventListener('click', () => {
-            handleToggle(effect)
+            SoundData.handleToggle(effect)
         })
         div.appendChild(Label({
             textContent: effect,

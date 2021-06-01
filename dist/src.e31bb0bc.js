@@ -30518,6 +30518,27 @@ var SoundData = /*#__PURE__*/function () {
       this.data = {};
     }
   }, {
+    key: "handleTextAdd",
+    value: function handleTextAdd(text) {
+      this.text = text;
+    }
+  }, {
+    key: "checkEffect",
+    value: function checkEffect(e) {
+      return this.effects.includes(e);
+    }
+  }, {
+    key: "handleToggle",
+    value: function handleToggle(e) {
+      if (this.checkEffect(e)) {
+        this.effects = this.effects.filter(function (word) {
+          return e !== word;
+        });
+      } else {
+        this.effects.push(e);
+      }
+    }
+  }, {
     key: "sendToFireStore",
     value: function sendToFireStore() {
       //check if a delay is used and form list
@@ -30786,41 +30807,12 @@ exports.default = _default;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.handleToggle = exports.checkEffect = exports.handleTextAdd = exports.soundEffects = void 0;
-
-var _SoundData = _interopRequireDefault(require("./SoundData"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+exports.soundEffects = void 0;
 // Step one when adding new effect
 // Make sure variable name is the same as in firestore!
 var soundEffects = ['delay', 'equalizer', 'phaser', 'pitch', 'reverb', 'tempo'];
 exports.soundEffects = soundEffects;
-
-var handleTextAdd = function handleTextAdd(text) {
-  _SoundData.default.text = text;
-};
-
-exports.handleTextAdd = handleTextAdd;
-
-var checkEffect = function checkEffect(effect) {
-  return _SoundData.default.effects.includes(effect);
-};
-
-exports.checkEffect = checkEffect;
-
-var handleToggle = function handleToggle(effect) {
-  if (_SoundData.default.effects.includes(effect)) {
-    _SoundData.default.effects = _SoundData.default.effects.filter(function (word) {
-      return effect !== word;
-    });
-  } else {
-    _SoundData.default.effects.push(effect);
-  }
-};
-
-exports.handleToggle = handleToggle;
-},{"./SoundData":"lib/SoundData.js"}],"Components/Design/forms/Input.js":[function(require,module,exports) {
+},{}],"Components/Design/forms/Input.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31058,7 +31050,7 @@ var NewSound = /*#__PURE__*/function () {
             f.appendChild(dText);
 
             textInput.oninput = function () {
-              (0, _SoundEffects.handleTextAdd)(textInput.value);
+              _SoundData.default.handleTextAdd(textInput.value);
             }; //Sound effects
 
 
@@ -31070,10 +31062,10 @@ var NewSound = /*#__PURE__*/function () {
                 value: effect,
                 name: effect,
                 id: effect,
-                checked: (0, _SoundEffects.checkEffect)(effect)
+                checked: _SoundData.default.checkEffect(effect)
               }));
               checkbox.addEventListener('click', function () {
-                (0, _SoundEffects.handleToggle)(effect);
+                _SoundData.default.handleToggle(effect);
               });
               div.appendChild((0, _Label.default)({
                 textContent: effect,
@@ -31565,8 +31557,6 @@ var _Firestore = _interopRequireDefault(require("../../lib/Firestore"));
 
 var _SoundData = _interopRequireDefault(require("../../lib/SoundData"));
 
-var _SoundEffects = require("../../lib/SoundEffects");
-
 var _Button = _interopRequireDefault(require("../Design/Button"));
 
 var _Div = _interopRequireDefault(require("../Design/Div"));
@@ -31621,7 +31611,7 @@ var SoundForm = function SoundForm() {
   f.appendChild(dText);
 
   textInput.oninput = function () {
-    (0, _SoundEffects.handleTextAdd)(textInput.value);
+    SounfData.handleTextAdd(textInput.value);
   }; //Settings
 
 
@@ -31647,7 +31637,7 @@ var SoundForm = function SoundForm() {
 
 var _default = SoundForm;
 exports.default = _default;
-},{"../../lib/Firestore":"lib/Firestore.js","../../lib/SoundData":"lib/SoundData.js","../../lib/SoundEffects":"lib/SoundEffects.js","../Design/Button":"Components/Design/Button.js","../Design/Div":"Components/Design/Div.js","../Design/forms/Form":"Components/Design/forms/Form.js","../Design/forms/Input":"Components/Design/forms/Input.js","../Design/forms/Label":"Components/Design/forms/Label.js","../Design/Title":"Components/Design/Title.js","./EffectForms":"Components/Functional/EffectForms.js"}],"Components/General/Portal.js":[function(require,module,exports) {
+},{"../../lib/Firestore":"lib/Firestore.js","../../lib/SoundData":"lib/SoundData.js","../Design/Button":"Components/Design/Button.js","../Design/Div":"Components/Design/Div.js","../Design/forms/Form":"Components/Design/forms/Form.js","../Design/forms/Input":"Components/Design/forms/Input.js","../Design/forms/Label":"Components/Design/forms/Label.js","../Design/Title":"Components/Design/Title.js","./EffectForms":"Components/Functional/EffectForms.js"}],"Components/General/Portal.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31876,7 +31866,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53597" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50767" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

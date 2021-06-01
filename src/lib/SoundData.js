@@ -13,6 +13,22 @@ class SoundData {
         this.data = {};
     }
 
+    handleTextAdd(text) {
+        this.text = text;
+    }
+
+    checkEffect(e) {
+        return this.effects.includes(e);
+    }
+
+    handleToggle(e) {
+        if (this.checkEffect(e)) {
+            this.effects = this.effects.filter(word => e !== word);
+        } else {
+            this.effects.push(e);
+        }
+    }
+
     sendToFireStore() {
         //check if a delay is used and form list
         if(this.data.delay) {

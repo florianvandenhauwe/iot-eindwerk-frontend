@@ -1,6 +1,5 @@
 import firestorage from '../../lib/Firestore';
 import SoundData from '../../lib/SoundData';
-import { handleTextAdd } from '../../lib/SoundEffects';
 import Button from '../Design/Button';
 import Div from '../Design/Div';
 import Form from '../Design/forms/Form';
@@ -27,7 +26,7 @@ const SoundForm = () => {
     const textInput = dText.appendChild(Input({placeholder: 'Text here', name: 'text', id: 'text', value: SoundData.text, classList: ['fill-h']}));
     f.appendChild(dText);
     textInput.oninput = () => {
-        handleTextAdd(textInput.value);
+        SounfData.handleTextAdd(textInput.value);
     }
 
     //Settings
